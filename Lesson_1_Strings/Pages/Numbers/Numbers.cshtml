@@ -1,0 +1,282 @@
+﻿@page
+@model Lesson_1_Strings.Pages.Numbers.NumbersModel
+@{
+    ViewData["Title"] = "Numbers";
+}
+
+<div class="row text-center">
+    <div class="col">
+        <h1>Numbers</h1>
+        <p>Базовый тип языка C#</p>
+
+        <div class="alert alert-info">
+            Для выполнения всех задач в данном примере, в силу их простаты, не обязательно использовать IRepository Pattern. Всю логику можно
+            выносить в отдельные методы ViewModel.<br />
+            Для этого используем хэлпер asp-page-handler="название метода обработки".<br />
+            Так же, чтобы в ответе был виден тип, необходимо использовать метод базового класса Object, GetType()<br /><br />
+            Пример:<br />
+
+            <!--Создаём форму обработки запроса с методом POST и с явным указанием метода обработки (asp-page-handler)
+            Хочу подчеркнуть, что полное имя метода обработки OnPostExampleMethod, НО, перфикс OnPost мы опускаем-->
+            <!--Так же, научимся передавать параметры с помощью формы, без использования модели-->
+            <form method="post" asp-page-handler="ExampleMethod" class="form-group">
+                <!--Создаём новый ряд методом Bootstrap-->
+                <div class="row">
+                    <!--Создаём первую колонку, без указания размера и выравниванием текста по левой стороне-->
+                    <div class="col text-left">
+                        <!--Создаём лэйбл (текст) перед формой ввода-->
+                        <label class="col-form-label mr-2">Введите первое число: </label>
+                        <!--Создаём форму ввода значения, которая принимает только числа (type="number")
+                        И может передавать введённое значение через аргумент name (name="firstNum")
+                        Хочу подчеркнуть, что значение аргумента name ДОЛЖНО ПОЛНОСТЬЮ СОВПАДАТЬ с принемаемым методом обработки именем аргумента
+                        Как в данном примере: Метод обработки принимает 2 аргумента OnPostExampleMethod(int? firstNum, int? secondNum),
+                        Форма отправляет 2 аргумента с теми же именами-->
+                        <input type="number" name="firstNum" />
+                    </div>
+                    <!--Создаём вторую колонку, без указания размера и выравниванием текста по правой стороне-->
+                    <div class="col text-right">
+                        <label class="col-form-label mr-2">Введите второе число: </label>
+                        <input type="number" name="secondNum" />
+                    </div>
+                </div>
+                <!--Создаём кнопку отправки данных формы со стилями Bootstrap (зелёная кнопка)-->
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+            <!--Создаём область для показа ответа с проверкой на null и проверкой, какого типа свойство, если SByte, то показывать-->
+            @if (Model.Answer != null && Model.Answer is long)
+            {
+                <div class="jumbotron text-center">
+                    Answer is: @Model.Answer , this type is: @Model.Answer.GetType();
+                </div>
+            }
+        </div>
+
+        @*Paste the all logic here!*@
+
+        Paste the view HTML code here
+
+        @*-------------------------------------------*@
+    </div>
+</div>
+
+<div class="row text-center m-3">
+    <div class="col">
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bd-example-modal-xl">Open home work exercises</button>
+
+        <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Home Work</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <!--Создаём контейнер div, без отступов от внешнего края (mb-0) и выравниванием текста по центру (text-left)-->
+                    <div class="mb-0 text-center p-5">
+
+                        <!--Создаём контейнер параграфа с позиционированием текста по центру контейнера (text-center)-->
+
+                        <h2 class="text-center">Неявное и явное преобразование типов данных</h2>
+                        <hr class="my-2" />
+                        <div class="alert alert-warning">
+                            Стоит помнить, что компилятор может неявно сам приобразовывать типы, если:<br />
+                            1. Тип значения и тип переменной должны быть совместимы между собой;<br />
+                            2. Диапазон возможных значений типа, в который производится приведеие, должен быть не меньше чем у типа, который мы приводим.<br />
+                        </div>
+                        <p>
+                            <h5 class="text-center">Задание #1</h5>
+                            Написать программу, которая будет принимать из 2-х полей для ввода 2 числа типа <span class="text-danger">byte</span>, складывать их и возвращать ответ в <span class="text-danger">int</span>.<br />
+                            Тип Object может сам неяво приобразовываться в нужный тип.
+                        </p>
+
+                        <hr class="my-3" />
+                        <p>
+                            <h5 class="text-center">Задание #2</h5>
+                            Написать программу, которая будет принимать из 2-х полей для ввода 2 числа типа <span class="text-danger">sbyte</span>, складывать их и возвращать ответ в <span class="text-danger">sbyte</span>.<br />
+                            После этого в одно поле ввести число 127, во второе 1. Проанализировать результат и объяснить, почему именно такой результат в итоге получился.
+                        </p>
+
+                        <hr class="my-3" />
+                        <p>
+                            <h5 class="text-center">Задание #3</h5>
+                            Написать программу, которая будет принимать из 2-х полей для ввода 2 числа типа <span class="text-danger">decimal</span>, складывать их и возвращать ответ в <span class="text-danger">decimal</span>.<br />
+                            Тип поля ввода должен быть text и потребуется привести все воходящие параметры в тип decimal, т.к. в метод обработки придёт тип string<br />
+                            Тип decimal чаще всего используется для финансовых операций.
+                        </p>
+
+                        <hr class="my-3" />
+                        <p>
+                            <h5 class="text-center">Задание #4</h5>
+                            Написать программу, которая будет принимать из 2-х полей для ввода 2 числа типа <span class="text-danger">string</span>,преобразовать в тип decimal, скложить их и вернуть ответ в <span class="text-danger">decimal</span>.<br />
+                            Тип поля ввода должен быть text<br />
+                            Ввести в одно из полей какой-нибудь символ (не цифру) и обработать исключение методом TryParse.
+                        </p>
+
+                        <hr class="my-3" />
+                        <p>
+                            <h5 class="text-center">Задание #5</h5>
+                            Написать программу, которая будет принимать из 2-х полей для ввода 2 числа типа <span class="text-danger">decimal</span>, складывать их и, конвертировать в тип int, вернуть ответ в <span class="text-danger">int</span>.<br />
+                            Объяснить причину появления "незапланированного" результата.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row text-center m-3">
+    <div class="col">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target=".bd-theory-modal-xl">Open home work theory</button>
+
+        <div class="modal fade bd-theory-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Theory about numeric types</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <!--Создаём контейнер div, без отступов от внешнего края (mb-0) и ыравниванием текста по левой стороне (text-left)-->
+                    <div class="mb-0 text-left p-5">
+                        <!--Создаём контейнер параграфа с позиционированием текста по центру контейнера (text-center)-->
+                        <p>
+                            <h2 class="text-center">Какие целочисленные типы существуют в C#?</h2>
+                        </p>
+
+                        <table class="table table-hover">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>C# type/keyword</th>
+                                    <th>Range</th>
+                                    <th>Size</th>
+                                    <th>.NET type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>sbyte</td>
+                                    <td>-128 to 127</td>
+                                    <td>Signed 8-bit integer</td>
+                                    <td>System.SByte</td>
+                                </tr>
+                                <tr>
+                                    <td>byte</td>
+                                    <td>0 to 255</td>
+                                    <td>Unsigned 8-bit integer</td>
+                                    <td>System.Byte</td>
+                                </tr>
+                                <tr>
+                                    <td>short</td>
+                                    <td>-32,768 to 32,767</td>
+                                    <td>Signed 16-bit integer</td>
+                                    <td>System.Int16</td>
+                                </tr>
+                                <tr>
+                                    <td>ushort</td>
+                                    <td>0 to 65,535</td>
+                                    <td>Unsigned 16-bit integer</td>
+                                    <td>System.UInt16</td>
+                                </tr>
+                                <tr>
+                                    <td>int</td>
+                                    <td>-2,147,483,648 to 2,147,483,647</td>
+                                    <td>Signed 32-bit integer</td>
+                                    <td>System.Int32</td>
+                                </tr>
+                                <tr>
+                                    <td>uint</td>
+                                    <td>0 to 4,294,967,295</td>
+                                    <td>Unsigned 32-bit integer</td>
+                                    <td>System.UInt32</td>
+                                </tr>
+                                <tr>
+                                    <td>long</td>
+                                    <td>-9,223,372,036,854,775,808 to 9,223,372,036,854,775,807</td>
+                                    <td>Signed 64-bit integer</td>
+                                    <td>System.Int64</td>
+                                </tr>
+                                <tr>
+                                    <td>ulong</td>
+                                    <td>0 to 18,446,744,073,709,551,615</td>
+                                    <td>Unsigned 64-bit integer</td>
+                                    <td>System.UInt64</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr class="my-5" />
+
+                        <p>
+                            <h2 class="text-center">Какие типы с плавающей точкой существуют в C#?</h2>
+                        </p>
+
+                        <table class="table table-hover">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>C# type/keyword</th>
+                                    <th>Approximate range</th>
+                                    <th>Precision</th>
+                                    <th>Size</th>
+                                    <th>.NET type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>float</td>
+                                    <td>±1.5 x 10<sup>−45</sup> to ±3.4 x 10<sup>38</sup></td>
+                                    <td>~6-9 digits</td>
+                                    <td>4 bytes</td>
+                                    <td>System.Single</td>
+                                </tr>
+                                <tr>
+                                    <td>double</td>
+                                    <td>±5.0 × 10<sup>−324</sup> to ±1.7 × 10<sup>308</sup></td>
+                                    <td>~15-17 digits</td>
+                                    <td>8 bytes</td>
+                                    <td>System.Double</td>
+                                </tr>
+                                <tr>
+                                    <td>decimal</td>
+                                    <td>±1.0 x 10<sup>-28</sup> to ±7.9228 x 10<sup>28</sup></td>
+                                    <td>28-29 digits</td>
+                                    <td>16 bytes</td>
+                                    <td>System.Decimal</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <hr class="my-3" />
+
+                        <p>
+                            <h2 class="text-center">Конвертация типов данных в C#</h2>
+                        </p>
+                        <hr class="my-3" />
+
+                        <p class="text-center">
+                            В C# существует несколько классов конвертации:<br />
+                            1. Класс <a href="https://docs.microsoft.com/en-us/dotnet/api/system.convert?view=netcore-3.1" target="_blank">Convert</a><br />
+                            2. Класс <a href="https://docs.microsoft.com/en-us/dotnet/api/system.int32.parse?view=netcore-3.1" target="_blank">Parse</a><br />
+                            3. Класс <a href="https://docs.microsoft.com/en-us/dotnet/api/system.int32.tryparse?view=netcore-3.1" target="_blank">TryParse</a><br />
+                        </p>
+
+                        <hr class="my-3" />
+
+                        <p>
+                            <h2 class="text-center"></h2>
+                        </p>
+                        <p class="text-center">
+                            Информация о явном и неявном преобразовании типов:<br />
+                            <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/types/casting-and-type-conversions" target="_blank">Преобразование</a>
+                        </p>
+                        <hr class="my-3" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

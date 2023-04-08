@@ -1,0 +1,528 @@
+﻿@page
+@model Lesson_1_Strings.Pages.StringsModel
+@using IndividualLessons.Models
+@{
+    ViewData["Title"] = "Strings";
+}
+
+<!--Создаём ряд (row), используя стили Bootstrap 4 и выравниваем текст в нём по центру (text-center)-->
+<div class="row text-center">
+    <!--Создаём колонку в этом ряду (col), по умолчанию она занимает всю ширину ряда-->
+    <div class="col">
+        <!--Создаём заголовок (h1), по умолчанию, он самый большой-->
+        <h1>Lesson 1: Strings</h1>
+        <!--Создаём контейнер параграфа (p)-->
+        <p>Базовый тип языка C#</p>
+
+        <!--Создаём форму отправки данных, обязательное условие - добавить атрибут обработки формы (method="post"), что говорит форме, что её следует обрабатывать в POST методе-->
+        <form method="post">
+
+            <!--Зоздаём контейнер label, что является выводом простого текста в формах, назначая стили Bootstrap (col-form-label) для отображения лейбла-->
+            <label class="col-form-label">Choose form action: </label>
+
+            <!--Создаём выпадающий список, заполняя его данными из модели перечислителя (asp-items="Html.GetEnumSelectList<FunctionEnum>()")-->
+            <!--Записяем выбранный элемент в модель (asp-for="FirstString.FunctionEnum"), для отправки и обработки на сервере-->
+            <!--Так же стилисуем отображение выпадающего списка стилями Bootstrap (custom-select col-4 mx-auto)-->
+            <select asp-for="FirstString.FunctionEnum" class="custom-select col-4 mx-auto" asp-items="Html.GetEnumSelectList<FunctionEnum>()">
+
+                <!--Добавляем дополнительный пункт в список, по умолчаниею, он будет идти в начале списка-->
+                <option value="">Please Select Action</option>
+
+                <!--Закрывающий тег выпадающего списка. По умолчанию закрывающие теги присутствуют у многих элементов разметки HTML-->
+            </select>
+
+            <!--Проверяем модель на null, если модель пустая, то следующее содержимое не будет показано-->
+            <!--Вторая причина этой проверки, избегание получения NullReferenceExeption во время выполнения кода-->
+            @if (Model.FirstString != null)
+            {
+                <!--Если первое условие выполнено, то переходим в выбору, на основании параметра перечислителя модели, что показывать пользователю-->
+                @switch (Model.FirstString.FunctionEnum)
+                {
+                    // Если выбран пункт списка none, то не делать ничего
+                    case FunctionEnum.None:
+                        break;
+
+                    // Если выбран пункт Capitalize
+                    case FunctionEnum.Capitalize:
+                        {
+                            // То показывать следующий блок кода
+                            // Создаём блочный контейнер div со стилями Bootstrap (alert alert-success)(зелёный фон)
+                            <div class="alert alert-success m-1" role="alert">
+                                <!--Создаём заголовок блока-->
+                                <h4 class="alert-heading">Пример выполнения задания 1.1</h4>
+
+                                <!--Горизонтальная разделительная черта (hr)-->
+                                <hr />
+
+                                <!--Создаём контейнер параграфа с классом внешнего нижнего отступа 0 (mb-0)-->
+                                <p class="mb-0">
+                                    1.1 Текстовые сообщения часто печатаются строчными буквами, но многие сотовые телефоны имеют встроенные средства
+                                    преобразования строчной буквы в прописную после символа пунктуации - точки. Составить программу,
+                                    которая будет вводить сообщение в переменную String (на одной строке), а затем обрабатывать его с прописными
+                                    буквами в соответствующих местах.
+                                </p>
+                            </div>
+
+                            <!--Создаём информационный левый блок перед полем ввода с отступом от внешнего края 3-->
+                            <div class="input-group mt-3">
+                                <!--Создаём вложенный div контейнер со стилями Bootstrap-->
+                                <div class="input-group-prepend">
+                                    <!--Создаём вложенный элемент span, который выводит текст-->
+                                    <span class="input-group-text">Enter the text:</span>
+                                </div>
+                                <!--Создаём форму многострочного ввода (textarea) которая записывает вводные данные в свойство модели OriginalString (asp-for="FirstString.OriginalString")-->
+                                <textarea class="form-control" aria-label="With textarea" asp-for="FirstString.OriginalString"></textarea>
+                            </div>
+
+                            <!--Создаём блок под полем ввода на синем фоне (alert alert-info)-->
+                            <div class="alert alert-info" role="alert">
+                                <!--Создаём заголовок блока-->
+                                <h4 class="alert-heading">If you want, copy this text for test:</h4>
+                                <!--Горизонтальная разделительная черта (hr)-->
+                                <hr>
+                                <!--Создаём контейнер параграфа с классом внешнего нижнего отступа 0 (mb-0)-->
+                                <p class="mb-0">
+                                    ПРоГРаМмы ГлюЧат ПотОМу, чТо Вы ЗАДаЕтЕСЬ этИм вОПрОСоМ. нЕ слеДуЕТ СтРеМиТЬСЯ ИЗБАВЛяТься ОТ них. ПАТчи ЛИШЬ УмножАЮт ГЛюкИ.
+                                    нЕТ нИКАкоЙ рАЗНицы МежДу ХаРДОм и софтом, ПРОграммоЙ И пРОГрамМиСТОМ. ПРОграММа, ИЗБАВлЕннАя От ГЛЮкОв, вПАдаЕТ В нИрВАНу.
+                                    ПРограМмы В НИрваНе не глЮЧАт, но И не рАБоТаЮт.
+                                </p>
+                            </div>
+
+                            <!--Проверяем, если модель не равна null и свойство ConvertedString модели не пустая либо в ней не одни пробелы-->
+                            @if (Model.FirstString != null && !string.IsNullOrWhiteSpace(Model.FirstString.ConvertedString))
+                            {
+                                // Создаём блок div с классом Bootstrap
+                                <div class="jumbotron mx-auto text-left">
+                                    <!--Создаём заголовок блока-->
+                                    <h2 class="text-center">Result:</h2>
+                                    <!--Создаём горизонтальную черту под заголовкам и назначаем отстум по оси y в 4 (class="my-4")-->
+                                    <hr class="my-4" />
+                                    <!--Выводим информацию из свойства модели ConvertedString-->
+                                    <p>@Model.FirstString.ConvertedString</p>
+                                </div>
+                            }
+                        }
+                        break;
+
+                    //Exercise 1.2 output
+                    <!--Если выбран пункт списка WordCount-->
+                    case FunctionEnum.WordCount:
+                        {
+                            // Создаём блочный контейнер div со стилями Bootstrap (alert alert-success)(зелёный фон)
+                            <div class="alert alert-success m-1" role="alert">
+                                <!--Создаём заголовок блока-->
+                                <h4 class="alert-heading">Пример выполнения задания 1.2</h4>
+                                <!--Горизонтальная разделительная черта (hr)-->
+                                <hr>
+                                <!--Создаём контейнер параграфа с классом внешнего нижнего отступа 0 (mb-0)-->
+                                <p class="mb-0">
+                                    1.2 Составить метод, которая будет вводить строку в переменную String. Подсчитать, сколько различных символов встречаются в ней.
+                                    Вывести их на экран.
+                                </p>
+                            </div>
+
+                            <!--Создаём информационный левый блок перед полем ввода с отступом от внешнего края 3-->
+                            <div class="input-group mt-3">
+                                <!--Создаём вложенный div контейнер со стилями Bootstrap-->
+                                <div class="input-group-prepend">
+                                    <!--Создаём вложенный элемент span, который выводит текст-->
+                                    <span class="input-group-text">Enter the text:</span>
+                                </div>
+                                <!--Создаём форму многострочного ввода (textarea) которая записывает вводные данные в свойство модели OriginalString (asp-for="FirstString.OriginalString")-->
+                                <textarea class="form-control" aria-label="With textarea" asp-for="FirstString.OriginalString"></textarea>
+
+                            </div>
+
+                            <!--Создаём блок под полем ввода на синем фоне (alert alert-info)-->
+                            <div class="alert alert-info" role="alert">
+                                <!--Создаём заголовок блока-->
+                                <h4 class="alert-heading">If you want, copy this text for test:</h4>
+
+                                <!--Создаём горизонтальную черту под заголовкам и назначаем отстум по оси y в 4 (class="my-4")-->
+                                <hr>
+                                <!--Создаём контейнер параграфа с классом внешнего нижнего отступа 0 (mb-0)-->
+                                <p class="mb-0">
+                                    Глючит ли программа, распечатывающая сама себя? Как выглядит программа, не записанная ни на одном носителе?
+                                    Однажды ученик спросил учителя, как избавиться от глюков в программах, и учитель дал ему вирус CIH.
+                                    Однажды другой ученик сказал учителю, что хочет программу без глюков. "Дурак! - крикнул учитель,
+                                    - почему ты не просишь глюк без программы?", - и ударил его винчестером по голове. Если вы еще не обрели просветление,
+                                    с вами не о чем говорить.
+                                </p>
+                            </div>
+
+                            <!--Проверяем, если модель не null и свойство модели CharCount больше 0-->
+                            @if (Model.FirstString != null && Model.FirstString.CharCount > 0)
+                            {
+                                <!--Если условие верно, то создаём контейнер div-->
+                                <div class="jumbotron mx-auto text-center">
+                                    <!--Создаём заголовок блока-->
+                                    <h2>Result:</h2>
+                                    <!--Создаём горизонтальную черту под заголовкам и назначаем отстум по оси y в 4 (class="my-4")-->
+                                    <hr class="my-4" />
+                                    <!--Выводим информацию из свойства модели CharCount-->
+                                    <p>Count of characters is: @Model.FirstString.CharCount</p>
+                                </div>
+                            }
+                        }
+                        break;
+
+                    //Exercise 1.3 output
+                    <!--Если выбран пункт списка SomeWordStartFinish-->
+                    case FunctionEnum.SomeWordStartFinish:
+                        {
+                            // Создаём блочный контейнер div со стилями Bootstrap (alert alert-success)(зелёный фон)
+                            <div class="alert alert-success m-1" role="alert">
+                                <!--Создаём заголовок блока-->
+                                <h4 class="alert-heading">Пример выполнения задания 1.3</h4>
+                                <!--Горизонтальная разделительная черта (hr)-->
+                                <hr>
+                                <!--Создаём контейнер параграфа с классом внешнего нижнего отступа 0 (mb-0)-->
+                                <p class="mb-0">
+                                    1.3 Составить метод, которая будет вводить строку в переменную String. Найти в ней те слова, которые начинаются и
+                                    оканчиваются одной и той же буквой.
+                                </p>
+                            </div>
+
+                            <!--Создаём информационный левый блок перед полем ввода с отступом от внешнего края 3-->
+                            <div class="input-group mt-3">
+                                <!--Создаём вложенный div контейнер со стилями Bootstrap-->
+                                <div class="m-auto">
+                                    <label class="col-form-label mb-3 p-1">Enter a start and finish word char: </label>
+                                    <input type="text" maxlength="1" asp-for="FirstString.WordStartEndCharacter" value="" class="mb-3" />
+                                </div>
+
+                                <!--Создаём информационный левый блок перед полем ввода с отступом от внешнего края 3-->
+                                <div class="input-group mt-3">
+                                    <!--Создаём вложенный div контейнер со стилями Bootstrap-->
+                                    <div class="input-group-prepend">
+                                        <!--Создаём вложенный элемент span, который выводит текст-->
+                                        <span class="input-group-text">Enter the text:</span>
+                                    </div>
+                                    <!--Создаём форму многострочного ввода (textarea) которая записывает вводные данные в свойство модели OriginalString (asp-for="FirstString.OriginalString")-->
+                                    <textarea class="form-control" aria-label="With textarea" asp-for="FirstString.OriginalString"></textarea>
+
+                                </div>
+
+                            </div>
+
+                            <!--Создаём блок под полем ввода на синем фоне (alert alert-info)-->
+                            <div class="alert alert-info" role="alert">
+                                <!--Создаём заголовок блока-->
+                                <h4 class="alert-heading">If you want, copy this text for test:</h4>
+
+                                <!--Создаём горизонтальную черту под заголовкам и назначаем отстум по оси y в 4 (class="my-4")-->
+                                <hr>
+                                <!--Создаём контейнер параграфа с классом внешнего нижнего отступа 0 (mb-0)-->
+                                <p class="mb-0">
+                                    Едет программист в такси. Вдруг машина встала – ни тпру ни ну! Водила с чертыханиями <span class="text-danger">з</span>але<span class="text-danger">з</span> под капот, возится
+                                    там – результат – ноль. Программер посмотрел – посмотрел на его мучения да и говорит: мужик, ты окна-то закрой!
+                                </p>
+                            </div>
+
+                            <!--Проверяем, если модель не null и свойство модели WordStartEndCharacter - буква-->
+                            @if (Model.FirstString != null && char.IsLetter(Model.FirstString.WordStartEndCharacter))
+                            {
+                                <!--Если условие верно, то создаём контейнер div-->
+                                <div class="jumbotron mx-auto text-center">
+                                    <!--Создаём заголовок блока-->
+                                    <h2>Result:</h2>
+                                    <!--Создаём горизонтальную черту под заголовкам и назначаем отстум по оси y в 4 (class="my-4")-->
+                                    <hr class="my-4" />
+                                    <!--Выводим информацию из свойства модели CharCount-->
+                                    <p>Count of words start and end character '@Model.FirstString.WordStartEndCharacter' is: @Model.FirstString.CharCount</p>
+                                    <p>This word(s) is: @Model.FirstString.ConvertedString</p>
+                                </div>
+                            }
+                        }
+                        break;
+
+                    //Exercise 1.4 output
+                    <!--Если выбран пункт списка SomeWordStartFinish-->
+                    case FunctionEnum.SomeWordsCount:
+                        {
+                            // Создаём блочный контейнер div со стилями Bootstrap (alert alert-success)(зелёный фон)
+                            <div class="alert alert-success m-1" role="alert">
+                                <!--Создаём заголовок блока-->
+                                <h4 class="alert-heading">Пример выполнения задания 1.4</h4>
+                                <!--Горизонтальная разделительная черта (hr)-->
+                                <hr>
+                                <!--Создаём контейнер параграфа с классом внешнего нижнего отступа 0 (mb-0)-->
+                                <p class="mb-0">
+                                    1.4 Составить метод, которая будет вводить строку в переменную String. Определить, сколько раз в строке встречается заданное слово.
+                                </p>
+                            </div>
+
+                            <!--Создаём информационный левый блок перед полем ввода с отступом от внешнего края 3-->
+                            <div class="input-group mt-3">
+                                <!--Создаём вложенный div контейнер со стилями Bootstrap-->
+                                <div class="m-auto">
+                                    <label class="col-form-label mb-3 p-1">Enter a start and finish word char: </label>
+                                    <input type="text" maxlength="20" asp-for="FirstString.SearchingWord" value="" class="mb-3" />
+                                </div>
+
+                                <!--Создаём информационный левый блок перед полем ввода с отступом от внешнего края 3-->
+                                <div class="input-group mt-3">
+                                    <!--Создаём вложенный div контейнер со стилями Bootstrap-->
+                                    <div class="input-group-prepend">
+                                        <!--Создаём вложенный элемент span, который выводит текст-->
+                                        <span class="input-group-text">Enter the text:</span>
+                                    </div>
+                                    <!--Создаём форму многострочного ввода (textarea) которая записывает вводные данные в свойство модели OriginalString (asp-for="FirstString.OriginalString")-->
+                                    <textarea class="form-control" aria-label="With textarea" asp-for="FirstString.OriginalString"></textarea>
+
+                                </div>
+
+                            </div>
+
+                            <!--Создаём блок под полем ввода на синем фоне (alert alert-info)-->
+                            <div class="alert alert-info" role="alert">
+                                <!--Создаём заголовок блока-->
+                                <h4 class="alert-heading">If you want, copy this text for test:</h4>
+
+                                <!--Создаём горизонтальную черту под заголовкам и назначаем отстум по оси y в 4 (class="my-4")-->
+                                <hr>
+                                <!--Создаём контейнер параграфа с классом внешнего нижнего отступа 0 (mb-0)-->
+                                <p class="mb-0">
+                                    Стадии развития программиста:<br />
+                                    -Ваш код говно.<br />
+                                    -Мой код говно.<br />
+                                    -Любой код говно.<br />
+                                    -Жизнь говно.<br />
+                                    -Выступаешь на конференции с темой: Как структурировать говно так, чтобы оно не растекалось.<br />
+                                </p>
+                            </div>
+
+                            <!--Проверяем, если модель не null и свойство модели WordStartEndCharacter - буква-->
+                            @if (Model.FirstString != null && !string.IsNullOrWhiteSpace(Model.FirstString.ConvertedString))
+                            {
+                                <!--Если условие верно, то создаём контейнер div-->
+                                <div class="jumbotron mx-auto text-center">
+                                    <!--Создаём заголовок блока-->
+                                    <h2>Result:</h2>
+                                    <!--Создаём горизонтальную черту под заголовкам и назначаем отстум по оси y в 4 (class="my-4")-->
+                                    <hr class="my-4" />
+                                    <!--Выводим информацию из свойства модели CharCount-->
+                                    <p>Words count is: @Model.FirstString.CharCount</p>
+                                    <p>This word is: @Model.FirstString.ConvertedString</p>
+                                </div>
+                            }
+                        }
+                        break;
+
+                    //Exercise 1.5 output
+                    <!--Если выбран пункт списка SomeWordStartFinish-->
+                    case FunctionEnum.ContainWord:
+                        {
+                            // Создаём блочный контейнер div со стилями Bootstrap (alert alert-success)(зелёный фон)
+                            <div class="alert alert-success m-1" role="alert">
+                                <!--Создаём заголовок блока-->
+                                <h4 class="alert-heading">Пример выполнения задания 1.5</h4>
+                                <!--Горизонтальная разделительная черта (hr)-->
+                                <hr>
+                                <!--Создаём контейнер параграфа с классом внешнего нижнего отступа 0 (mb-0)-->
+                                <p class="mb-0">
+                                    1.5 Строка, содержащая произвольный русский текст, состоит не более чем из 200 символов. Написать, какие буквы и сколько раз встречаются в этом тексте.
+                                    Ответ должен приводиться в грамматически правильной форме: например, а — 25 раз.
+                                </p>
+                            </div>
+
+                            <!--Создаём информационный левый блок перед полем ввода с отступом от внешнего края 3-->
+                            <div class="input-group mt-3">
+                                <!--Создаём вложенный div контейнер со стилями Bootstrap-->
+                                <div class="input-group-prepend">
+                                    <!--Создаём вложенный элемент span, который выводит текст-->
+                                    <span class="input-group-text">Enter the text:</span>
+                                </div>
+                                <!--Создаём форму многострочного ввода (textarea) которая записывает вводные данные в свойство модели OriginalString (asp-for="FirstString.OriginalString")-->
+                                <textarea class="form-control" aria-label="With textarea" asp-for="FirstString.OriginalString"></textarea>
+                            </div>
+
+
+                            <!--Создаём блок под полем ввода на синем фоне (alert alert-info)-->
+                            <div class="alert alert-info" role="alert">
+                                <!--Создаём заголовок блока-->
+                                <h4 class="alert-heading">If you want, copy this text for test:</h4>
+
+                                <!--Создаём горизонтальную черту под заголовкам и назначаем отстум по оси y в 4 (class="my-4")-->
+                                <hr>
+                                <!--Создаём контейнер параграфа с классом внешнего нижнего отступа 0 (mb-0)-->
+                                <p class="mb-0">
+                                    Программёр, уставший вусмерть, приходит домой в первом часу ночи. Поесть сил уже нет, раздевается, ложится в постель. Обнимает жену. Она ему говорит:
+                                    -Знаешь, у меня голова болит.
+                                    Он, уже в полусне:
+                                    -Да я только на просмотр, не на редактирование.
+                                </p>
+                            </div>
+
+                            <!--Проверяем, если модель не null и свойство модели WordStartEndCharacter - буква-->
+                            @if (Model.FirstString != null && Model.FirstString.CharacterDictionary.Count > 0)
+                            {
+                                <!--Если условие верно, то создаём контейнер div-->
+                                <div class="jumbotron mx-auto text-center">
+                                    <!--Создаём заголовок блока-->
+                                    <h2>Result:</h2>
+                                    <!--Создаём горизонтальную черту под заголовкам и назначаем отстум по оси y в 4 (class="my-4")-->
+                                    <hr class="my-4" />
+                                    <p>Words count is: @Model.FirstString.CharacterDictionary.Count</p>
+                                    <p>This words is: </p>
+
+                                    @foreach (var item in Model.FirstString.CharacterDictionary.OrderBy(x => x.Key))
+                                    {
+                                        <span> '@item.Key' - @item.Value @((item.Value == 1) || (item.Value > 4 && item.Value <= 21) || (item.Value > 24 && item.Value < 32) ? " раз ||" : " раза ||")</span>
+                                    }
+                                </div>
+                            }
+                        }
+                        break;
+
+
+                    //Exercise 1.6 output
+                    <!--Если выбран пункт списка SomeWordStartFinish-->
+                    case FunctionEnum.ReplaceWord:
+                        {
+                            // Создаём блочный контейнер div со стилями Bootstrap (alert alert-success)(зелёный фон)
+                            <div class="alert alert-success m-1" role="alert">
+                                <!--Создаём заголовок блока-->
+                                <h4 class="alert-heading">Пример выполнения задания 1.6</h4>
+                                <!--Горизонтальная разделительная черта (hr)-->
+                                <hr>
+                                <!--Создаём контейнер параграфа с классом внешнего нижнего отступа 0 (mb-0)-->
+                                <p class="mb-0">
+                                    1.6 Дана строка, содержащая текст на русском языке. Заменить все вхождения заданного слова на другое слово.
+                                </p>
+                            </div>
+
+                            <!--Создаём информационный левый блок перед полем ввода с отступом от внешнего края 3-->
+                            <div class="input-group mt-3">
+                                <!--Создаём вложенный div контейнер со стилями Bootstrap-->
+                                <div class="m-auto">
+                                    <label class="col-form-label mb-3 p-1">Enter a word for searching: </label>
+                                    <input type="text" maxlength="20" asp-for="FirstString.SearchingWord" value="" class="mb-3" />
+                                </div>
+
+                                <div class="m-auto">
+                                    <label class="col-form-label mb-3 p-1">Enter a word for replace: </label>
+                                    <input type="text" maxlength="20" asp-for="FirstString.ReplacingWord" value="" class="mb-3" />
+                                </div>
+
+                                <!--Создаём информационный левый блок перед полем ввода с отступом от внешнего края 3-->
+                                <div class="input-group mt-3">
+                                    <!--Создаём вложенный div контейнер со стилями Bootstrap-->
+                                    <div class="input-group-prepend">
+                                        <!--Создаём вложенный элемент span, который выводит текст-->
+                                        <span class="input-group-text">Enter the text:</span>
+                                    </div>
+                                    <!--Создаём форму многострочного ввода (textarea) которая записывает вводные данные в свойство модели OriginalString (asp-for="FirstString.OriginalString")-->
+                                    <textarea class="form-control" aria-label="With textarea" asp-for="FirstString.OriginalString"></textarea>
+
+                                </div>
+
+                            </div>
+
+                            <!--Создаём блок под полем ввода на синем фоне (alert alert-info)-->
+                            <div class="alert alert-info" role="alert">
+                                <!--Создаём заголовок блока-->
+                                <h4 class="alert-heading">If you want, copy this text for test:</h4>
+
+                                <!--Создаём горизонтальную черту под заголовкам и назначаем отстум по оси y в 4 (class="my-4")-->
+                                <hr>
+                                <!--Создаём контейнер параграфа с классом внешнего нижнего отступа 0 (mb-0)-->
+                                <p class="mb-0">
+                                    Приходит программист к психотерапевту.
+                                    -Доктор помогите. Очень плохо сплю. Мне снится двоичный код.
+                                    -Это у вас от переутомления. Слишком много работаете. Возьмите отпуск, отдохните. Вот эти таблеточки можете попить. И через месяц ко мне на прием.
+                                    Через месяц программист приходит к доктору. Посвежевший и отдохнувший.
+                                    -Спасибо, доктор!
+                                    -Все нормально? Как самочувствие? Как спите?
+                                    -Все отлично доктор! Сплю хорошо. И сны снятся, как и положено, с шестнадцатиричным кодом.
+                                </p>
+                            </div>
+
+                            <!--Проверяем, если модель не null и свойство модели WordStartEndCharacter - буква-->
+                            @if (Model.FirstString != null && !string.IsNullOrWhiteSpace(Model.FirstString.ConvertedString))
+                            {
+                                <!--Если условие верно, то создаём контейнер div-->
+                                <div class="jumbotron mx-auto text-center">
+                                    <!--Создаём заголовок блока-->
+                                    <h2>Result:</h2>
+                                    <!--Создаём горизонтальную черту под заголовкам и назначаем отстум по оси y в 4 (class="my-4")-->
+                                    <hr class="my-4" />
+
+                                    <p>@Model.FirstString.ConvertedString</p>
+                                </div>
+                            }
+                        }
+                        break;
+                }
+            }
+            <!--Создаём кнопку отправки формы-->
+            <!--Обязательно указывать тип кнопки type="submit", назначаем стили кнопки (class="btn btn-primary m-1")(синяя кнопка)-->
+            <button type="submit" class="btn btn-primary m-1">Submit</button>
+        </form>
+
+        <!--Создаём блочный контейнер div со стилями Bootstrap (alert alert-danger)(красный фон)-->
+        <div class="alert alert-danger m-1" role="alert">
+            <!--Создаём заголовок блока-->
+            <h4 class="alert-heading">Домашнее задание: </h4>
+
+            <!--Создаём горизонтальную черту под заголовкам-->
+            <hr>
+
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bd-example-modal-xl">Open home work exercises</button>
+
+            <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Home Work</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <!--Создаём контейнер div, без отступов от внешнего края (mb-0) и ыравниванием текста по левой стороне (text-left)-->
+                        <div class="mb-0 text-left p-5">
+                            <!--Создаём контейнер параграфа с позиционированием текста по центру контейнера (text-center)-->
+                            <p class="text-center">
+                                !РЕАЛИЗОВАТЬ ВЕСЬ ФУНКЦИОНАЛ С ПОМОЩЬЮ ЭТОЙ ОДНОЙ ФОРМЫ И ВЫПАДАЮЩЕГО СПИСКА!
+                            </p>
+                            Capitalize - (Задание 1.1) Форматирует текст с заглавными буквами после точки<br /><br />
+                            WordCount - (Задание 1.2) Создать форму для ввода искомой буквы,<br />
+                            добавить в модель 2 новых свойства типа char Word и int Count.<br />
+                            Одна для хранения искомого символа, вторая - для счётчика.<br />
+                            Объявить его в интерфейсе,<br />
+                            Создать метод обработки запроса в репозитории,<br />
+                            Вывести результат в представление.<br /><br />
+                            SomeWordStartFinish - (Задание 1.3)<br /><br />
+                            SomeWordsCount - (Задание 1.4)<br /><br />
+                            ContainWord - (Задание 1.5)<br /><br />
+                            (Задание 1.6) - Добавить пункт в выпадающий список и реализовать весь требуемый функционал.<br /><br />
+
+                            <hr class="my-3" />
+                            <p>
+                                1.1 Текстовые сообщения часто печатаются строчными буквами, но многие сотовые телефоны имеют встроенные средства
+                                преобразования строчной буквы в прописную после символа пунктуации - точки. Составить программу,
+                                которая будет вводить сообщение в переменную String (на одной строке), а затем обрабатывать его с прописными
+                                буквами в соответствующих местах.
+                            </p>
+                            <hr class="my-1" />
+                            <p>1.2 Составить метод, которая будет вводить строку в переменную String. Подсчитать, сколько различных символов встречаются в ней. Вывести их на экран.</p>
+                            <hr class="my-1" />
+                            <p>1.3 Составить метод, которая будет вводить строку в переменную String. Найти в ней те слова, которые начинаются и оканчиваются одной и той же буквой.</p>
+                            <hr class="my-1" />
+                            <p>1.4 Составить метод, которая будет вводить строку в переменную String. Определить, сколько раз в строке встречается заданное слово.</p>
+                            <hr class="my-1" />
+                            <p>
+                                1.5 Строка, содержащая произвольный русский текст, состоит не более чем из 200 символов. Написать, какие буквы и сколько раз встречаются в этом тексте.
+                                Ответ должен приводиться в грамматически правильной форме: например, а — 25 раз.
+                            </p>
+                            <hr class="my-1" />
+                            <p>1.6 Дана строка, содержащая текст на русском языке. Заменить все вхождения заданного слова на другое слово.</p>
+                            <hr class="my-1" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
